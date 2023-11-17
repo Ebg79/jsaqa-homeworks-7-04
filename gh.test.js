@@ -27,6 +27,27 @@ describe("Github page tests", () => {
     const actual = await page.$eval("a", (link) => link.getAttribute("href"));
     expect(actual).toEqual("#start-of-content");
   }, 10000);
+});
+
+describe("Additional Github page tests", () => {
+  beforeEach(async () => {
+    await page.goto("https://github.com/additional");
+  });
+
+  test("The h1 header content'", async () => {
+    const firstLink = await page.$("header div div a");
+    await firstLink.click();
+    await page.waitForSelector("h1");
+    const title2 = await page.title();
+    expect(title2).toEqual(
+      "GitHub for teams · Build like the best teams on the planet · GitHub"
+    );
+  }, 10000);
+
+  test("The first link attribute", async () => {
+    const actual = await page.$eval("a", (link) => link.getAttribute("href"));
+    expect(actual).toEqual("#start-of-content");
+  }, 10000);
 
   test("The page contains Sign in button", async () => {
     const btnSelector = ".btn-large-mktg.btn-mktg";
